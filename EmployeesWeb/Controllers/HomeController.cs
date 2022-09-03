@@ -1,4 +1,4 @@
-﻿using EmployeesWeb.Models;
+﻿using EmployeesWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,6 +11,16 @@ namespace EmployeesWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationContext context;
 
+        public HomeController(ApplicationContext context)
+        {
+            this.context = context;
+        }
+
+        public IActionResult Index()
+        {
+            return Content(context.Addresses.Count().ToString());
+        }
     }
 }
