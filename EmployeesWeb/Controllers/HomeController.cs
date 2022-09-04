@@ -20,7 +20,8 @@ namespace EmployeesWeb.Controllers
 
         public IActionResult Index()
         {
-            return Content(context.Addresses.Count().ToString());
+            ViewBag.Addresses = context.Addresses.Count().ToString();
+            return View();
         }
     }
 }
