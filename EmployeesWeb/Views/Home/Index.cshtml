@@ -1,5 +1,33 @@
-﻿@{
+﻿@model IEnumerable<Employee>
+@{
     ViewBag.Title = "Таблица сотрудников";
+    int counter = 0;
 }
 
-<p>@ViewBag.Addresses</p>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">ФИО</th>
+            <th scope="col">Отдел</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Оклад</th>
+            <th scope="col">Оценка</th>
+            <th scope="col">Премия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <th scope="row">@(++counter)</th>
+                <td>@string.Format($"{emp.LastName} {emp.FirstName} {emp.MiddleName}")</td>
+                <td>@emp.Department.DepartmentName</td>
+                <td>@emp.Position.PositionName</td>
+                <td>@emp.Salary</td>
+                <td>@emp.Rating.Mark</td>
+                <td>@(emp.Salary * emp.Rating.Percent / 100)</td>
+            </tr>
+        }
+    </tbody>
+</table>

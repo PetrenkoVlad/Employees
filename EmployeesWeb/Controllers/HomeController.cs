@@ -1,5 +1,6 @@
 ﻿using EmployeesWeb.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,16 @@ namespace EmployeesWeb.Controllers
             this.context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ViewBag.Addresses = context.Addresses.Count().ToString();
-            return View();
+            var employees = await context.Employees
+                .Include(x => x.Address)
+                .Include(x => x.Department)
+                .Include(x => x.Position)
+                .Include(x => x.Rating)
+                .ToListAsync();
+
+            return View(employees);
         }
     }
 }
